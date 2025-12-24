@@ -53,3 +53,6 @@ jobs:
             -backend-config="key=${{ github.event.repository.name }}" \
             -backend-config="region=${{ inputs.aws-region }}" \
             -backend-config="dynamodb_table=${{ inputs.aws-lock-dynamodb-table }}"
+
+      - name: Terraform Validate
+        run: terraform validate
