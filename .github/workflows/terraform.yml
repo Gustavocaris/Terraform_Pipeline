@@ -30,4 +30,10 @@ jobs:
 
     #vamos agora configurar os passos que nossa pipeline deve seguir
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.3
