@@ -22,7 +22,12 @@ on:
 
 jobs:
   terraform:
+    #estamos indicando que o step vai rodar nessa maq ubuntu e todos os comandos do run, serao no terminal bash
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+
+    #vamos agora configurar os passos que nossa pipeline deve seguir
+    steps:
+      - uses: actions/checkout@v2
