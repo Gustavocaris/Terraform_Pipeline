@@ -20,9 +20,9 @@ jobs:
     uses: ./.github/workflows/terraform.yml
     with:
       environment: dev
-      aws-assume-role-arn: "arn:aws:iam::833899002257:role/github-actions-gustavodevops-pipeline}}"
+      aws-assume-role-arn: "arn:aws:iam::833899002257:role/github-actions-gustavodevops-pipeline"
       aws-region: "sa-east-1"
-      aws-statefile-s3-bucket: "{{gustavodevops-sa-east-1-terraform-statefile}}"
-      aws-lock-dynamodb-table: "{{gustavodevops-sa-east-1-terraform-lock}}"
+      aws-statefile-s3-bucket: "gustavodevops-sa-east-1-terraform-statefile"
+      aws-lock-dynamodb-table: "gustavodevops-sa-east-1-terraform-lock"
       #aws-statefile-s3-bucket: "{{ nome do bucket s3 }}"
       #aws-lock-dynamodb-table: "{{ nome da tabela do dynamodb }}"
