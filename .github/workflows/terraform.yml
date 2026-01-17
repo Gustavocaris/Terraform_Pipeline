@@ -33,6 +33,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug - list repo files
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 3 -type d
+
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
