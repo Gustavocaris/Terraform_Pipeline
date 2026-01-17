@@ -54,7 +54,6 @@ jobs:
           aws-region: ${{ inputs.aws-region }}
 
       - name: Terraform Init
-        working-directory: infra
         run: |
           cd infra && terraform init \
             -backend-config="bucket=${{ inputs.aws-statefile-s3-bucket }}" \
@@ -63,7 +62,6 @@ jobs:
             -backend-config="dynamodb_table=${{ inputs.aws-lock-dynamodb-table }}"
 
       - name: Terraform Validate
-        working-directory: infra
         run: terraform validate
 
       - name: Terraform Plan
