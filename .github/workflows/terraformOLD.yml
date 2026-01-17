@@ -19,10 +19,16 @@ on:
         type: string
         required: true
 
+
 jobs:
   terraform:
+    #estamos indicando que o step vai rodar nessa maq ubuntu e todos os comandos do run, serao no terminal bash
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
+    #vamos agora configurar os passos que nossa pipeline deve seguir
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,11 +39,13 @@ jobs:
           ls -la
           find . -maxdepth 3 -type d
 
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.3
 
+        #credenciais da AWS
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -46,27 +54,28 @@ jobs:
           aws-region: ${{ inputs.aws-region }}
 
       - name: Terraform Init
-        working-directory: Infra
         run: |
-          terraform init \
+          cd infra && terraform init \
             -backend-config="bucket=${{ inputs.aws-statefile-s3-bucket }}" \
-            -backend-config="key=${{ github.event.repository.name }}/${{ inputs.environment }}/terraform.tfstate" \
+            -backend-config="key=${{ github.event.repository.name }}" \
             -backend-config="region=${{ inputs.aws-region }}" \
             -backend-config="dynamodb_table=${{ inputs.aws-lock-dynamodb-table }}"
 
       - name: Terraform Validate
-        working-directory: Infra
         run: terraform validate
 
-      - name: Terraform Workspace + Plan
-        working-directory: Infra
-        run: |
-          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }}
-          terraform plan \
-            -var-file="env/${{ inputs.environment }}/terraform.tfvars" \
-            -out="${{ inputs.environment }}.plan"
+      - name: Terraform Plan
+        if: steps.read-destroy-config.outputs.destroy != 'true'
+        id: terraform-plan
+        run: cd infra &&
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform plan -var-file="./envs/${{ inputs.environment }}/terraform.tfvars" -out="${{ inputs.environment }}.plan"
 
       - name: Terraform Apply
-        working-directory: Infra
-        run: |
-          terraform apply -auto-approve "${{ inputs.environment }}.plan"
+        if: steps.read-destroy-config.outputs.destroy != 'true'
+        id: terraform-apply
+        run: cd infra &&
+          terraform workspace select ${{ inputs.environment }} || terraform workspace new ${{ inputs.environment }} &&
+          terraform apply "${{ inputs.environment }}.plan"
+
+#teste
