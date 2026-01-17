@@ -1,1 +1,1 @@
-bucket_name="prod-sa-east-1-buildrun-video-pipeline"
+bucket_name="prod-sa-east-1-buildrun-video-pipeline-gcaris-a0012423451"
