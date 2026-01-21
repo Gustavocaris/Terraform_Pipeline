@@ -20,25 +20,25 @@ Pronto! Você já está habilitado para implantar infras na AWS com Terraform vi
 
 ```html
 Terraform_Pipeline/
-├── Infra/
-├── envs/
-│       ├── dev/
-│       │       └── terraform.tfvars
-│       └── prod/
-│             └── terraform.tfvars
-|     ├── main.tf
-│     ├── backend.tf
-|     ├── main.tf
-|     ├── variables.tf
-|     ├── provider.tfvars
-├── envs/
-│     ├── dev/
-│     │     └── terraform.tfvars
-│     └── prod/
-│           └── terraform.tfvars
-└── .github/
-      └── workflows/
-            ├── terraform.yml # Workflow reutilizável
-            ├── develop.yml # Pipeline DEV
-            └── main.yml # Pipeline PROD
+                  ├── .github/
+                  │   └── workflows/
+                  │       ├── terraform.yml        
+                  │       ├── develop.yml          
+                  │       └── main.yml             
+                  │
+                  ├── Infra/
+                  │   ├── backend.tf               
+                  │   ├── main.tf                  
+                  │   ├── variables.tf             
+                  │   ├── provider.tfvars          
+                  │   └── envs/
+                  │       ├── dev/
+                  │       │   └── terraform.tfvars 
+                  │       └── prod/
+                  │           └── terraform.tfvars 
+                  │
+                  ├── Trash/
+                  │   ├── developOLD.yml            
+                  │   ├── mainOLD.yml
+                  │   └── terraformOLD.yml
 ```
