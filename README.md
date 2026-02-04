@@ -8,58 +8,64 @@
   <img alt="Version: 1.0" src="https://img.shields.io/badge/version-1.0-yellowgreen">
 
 </p>
+
 <hr>
-<p>
+
+# Overview
+
 Este repositório tem como objetivo centralizar e padronizar a pipeline de infraestrutura como código (IaC), utilizando Terraform para o provisionamento de recursos na AWS, com execução automatizada por meio do GitHub Actions e autenticação segura via OIDC (OpenID Connect). A proposta é permitir que qualquer ambiente esteja apto a realizar deploys de infraestrutura de forma segura, automatizada, versionada e reprodutível, sem o uso de credenciais estáticas, utilizando boas práticas como:
   
-  <li>Integração nativa entre GitHub e AWS via Identity Provider</li>
-  <li>Uso de IAM Roles com permissões mínimas (S3 e DynamoDB)</li>
-  <li>Backend remoto com S3 (statefile + versionamento)</li>
-  <li>Controle de concorrência com DynamoDB (lock de estado)</li>
-  <li>Execução totalmente automatizada via pipeline</li>
+- Integração nativa entre GitHub e AWS via Identity Provider
+- Uso de IAM Roles com permissões mínimas (S3 e DynamoDB)
+- Backend remoto com S3 (statefile + versionamento)
+- Controle de concorrência com DynamoDB (lock de estado)
+- Execução totalmente automatizada via pipeline
+  
 Ao final da configuração inicial (Identity Provider, IAM Role, S3, DynamoDB, workflows e repositório), o ambiente estará pronto para implantar infraestruturas na AWS com Terraform de forma automatizada via pipeline
-</p>
+
 
 <hr>
 
-`Arquitetura de pastas`
+# Directory architecture
+
 ```html
 Terraform_Pipeline/
-                  ├── .github/
-                  │   └── workflows/
-                  │       ├── terraform.yml        
-                  │       ├── develop.yml          
-                  │       └── main.yml             
-                  │
-                  ├── Infra/
-                  │   ├── backend.tf               
-                  │   ├── main.tf                  
-                  │   ├── variables.tf             
-                  │   ├── provider.tfvars          
-                  │   └── envs/
-                  │       ├── dev/
-                  │       │   └── terraform.tfvars 
-                  │       └── prod/
-                  │           └── terraform.tfvars 
-                  │
-                  ├── Trash/
-                  │   ├── developOLD.yml            
-                  │   ├── mainOLD.yml
-                  │   └── terraformOLD.yml
+	├── .github/
+	│   └── workflows/
+	│       ├── terraform.yml        
+	│       ├── develop.yml          
+	│       └── main.yml             
+	│
+	├── Infra/
+	│   ├── backend.tf               
+	│   ├── main.tf                  
+	│   ├── variables.tf             
+	│   ├── provider.tfvars          
+	│   └── envs/
+	│       ├── dev/
+	│       │   └── terraform.tfvars 
+	│       └── prod/
+	│           └── terraform.tfvars 
+	│
+	├── Trash/
+	│   ├── developOLD.yml            
+	│   ├── mainOLD.yml
+	│   └── terraformOLD.yml
 ```
 <hr>
 
-`1 - Setup do projeto`
+# Getting started
 
-<p>Criar o repositorio de pipeline de Infra no github</p>
-<ul style="list-style-position: inside; padding: 0;">
-  <li>Escrever o código Terraform para criação de recursos na AWS</li>
-  <li>Criação do Bucket S3 (Prod)</li>
-</ul>
+## 1 - Setup do projeto
+
+Criar o repositorio de pipeline de Infra no github
+- Criar o repositorio de pipeline de Infra no github
+- Criação do Bucket S3 (Prod)
+  
 
 <hr>
 
-`2 - Configurar sua conta na AWS:`
+## 2 - Configurar sua conta na AWS:
 
 <p>Configurar sua conta AWS IAM Role que será usada pela nossa pipeline</p>
  <ul style="list-style-position: inside; padding: 0;">
