@@ -1,6 +1,6 @@
-<h3 align="center">
+<h1 align="center">
   Pipeline de Infraestrutura (AWS + Terraform + Github Actions)
-</h3>
+</h1>
 
 <p align="center">
 
@@ -21,7 +21,9 @@ Este repositório tem como objetivo centralizar e padronizar a pipeline de infra
 - Controle de concorrência com DynamoDB (lock de estado)
 - Execução totalmente automatizada via pipeline
   
-Ao final da configuração inicial (Identity Provider, IAM Role, S3, DynamoDB, workflows e repositório), o ambiente estará pronto para implantar infraestruturas na AWS com Terraform de forma automatizada via pipeline
+```html
+🎯O fluxo esperado é: push para branch → pipeline dispara → assume role via OIDC → executa terraform init/plan/apply conforme ambiente.
+```
 
 
 <hr>
@@ -58,48 +60,50 @@ Terraform_Pipeline/
 
 ## 1 - Setup do projeto
 
-Criar o repositorio de pipeline de Infra no github
-- Criar o repositorio de pipeline de Infra no github
-- Criação do Bucket S3 (Prod)
+- Criar o repositório GitHub para pipeline de infraestrutura
+- Criar o bucket S3 inicial (Prod) para statefiles
   
 
 <hr>
 
 ## 2 - Configurar sua conta na AWS:
 
-<p>Configurar sua conta AWS IAM Role que será usada pela nossa pipeline</p>
- <ul style="list-style-position: inside; padding: 0;">
-  <li>Configurar a trust Relationship via OpenID</li>
-  <li>Criar a Role</li>
-  <li>Criar o bucket S3 que armazenará os Statesfiles do terraform.</li>
-  <li>Criar a tabela do DynamoDB que irá realizar o lock para modificações</li>
-</ul>
+Configurar sua conta AWS IAM Role que será usada pela nossa pipeline
+
+- Configurar a trust Relationship via OpenID
+- Criar a Role
+- Criar o bucket S3 que armazenará os Statesfiles do terraform
+- Criar a tabela do DynamoDB que irá realizar o lock para modificações
 
 	
-	
-3 Criar o reusable workflow do terraform:
-	Configurar os inputs do workflow
+## 3 - Criar o reusable workflow do terraform:
+
+Configurar os inputs do workflow
+
 		-env
 		-aws assume role arn
 		-aws region
 		-aws s3 bucket statefile
 		-aws dynamodb table lock
 
-	Configurar o setup do workflow
+Configurar o setup do workflow
+
 		-clonar o repositorio
 		-configurar a AWS CLI
-		-Configurar o terraform CLI
-		
-	Configurar o step terraform init
-	Configurar o step terraform validate
-	Configurar o step terraform Plan
-	Configurar o step terraform Apply
+		-Configurar o terraform CLI		
+		-Configurar o step terraform init
+		-Configurar o step terraform validate
+		-Configurar o step terraform Plan
+		-Configurar o step terraform Apply
 
 OBS:O ideal seria ter configurada uma pipeline para o ambiente de Desenvolvimento também.
 
-4 Vamos configurar a pipeline em Produção:
-	- configurar o reusable workflow do terraform (main)
-	- realizar a criação do bucket s3 no ambiente Prod
+## 4 - Configurar a pipeline em Produção:
+
+- configurar o reusable workflow do terraform (main)
+- realizar a criação do bucket s3 no ambiente Prod
 
 
-5 Praticas adicionais seria criarmos o suporte para o terraform destroy- mas isso não cheguei a realizar.
+## 5 Praticas adicionais:
+
+seria criarmos o suporte para o terraform destroy- mas isso não cheguei a realizar.
