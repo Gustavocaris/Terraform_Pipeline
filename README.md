@@ -56,6 +56,13 @@ Terraform_Pipeline/
 ```
 <hr>
 
+# Workflow
+
+<div align="center">
+	<img src="https://github.com/user-attachments/assets/16d8c659-2172-480e-84c9-f34026ea9705" width="800px" />
+</div>
+
+
 # Getting started
 
 ## 1 - Setup do projeto
